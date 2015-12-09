@@ -1,10 +1,12 @@
 unit OCRBitmap;
-{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=]
- Copyright (c) 2014, Jarl K. <Slacky> Holta || http://github.com/WarPie
- All rights reserved.
- 
- A minimalistic bitmap type.
-[=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+{==============================================================================]
+  Author: Jarl K. Holta
+  Project: RSWalker 
+  Project URL: https://github.com/WarPie/RSWalker
+  License: GNU GPL (http://www.gnu.org/licenses/gpl.html)
+  
+  A minimalistic bitmap type.
+[==============================================================================}
 {$mode objfpc}{$H+}
 {$macro on}
 {$inline on}

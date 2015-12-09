@@ -1,8 +1,12 @@
 unit OCREngine;
-{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=]
- Copyright (c) 2014, Jarl K. <Slacky> Holta || http://github.com/WarPie
- All rights reserved.
-[=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+{==============================================================================]
+  Author: Jarl K. Holta
+  Project: RSWalker 
+  Project URL: https://github.com/WarPie/RSWalker
+  License: GNU GPL (http://www.gnu.org/licenses/gpl.html)
+  
+  The engine that does all the work.
+[==============================================================================}
 {$mode objfpc}{$H+}
 {$macro on}
 {$inline on}

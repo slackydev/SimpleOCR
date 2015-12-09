@@ -1,10 +1,12 @@
 unit OCRUtils;
-{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=]
- Copyright (c) 2014, Jarl K. <Slacky> Holta || http://github.com/WarPie
- All rights reserved.
- 
- Utilities needed for the OCR-engine.
-[=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+{==============================================================================]
+  Author: Jarl K. Holta
+  Project: RSWalker 
+  Project URL: https://github.com/WarPie/RSWalker
+  License: GNU GPL (http://www.gnu.org/licenses/gpl.html)
+  
+  Utils needed by the ocr engine.
+[==============================================================================}
 {$mode objfpc}{$H+}
 {$macro on}
 {$inline on}
