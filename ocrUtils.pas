@@ -1,11 +1,11 @@
 unit OCRUtils;
 {==============================================================================]
   Author: Jarl K. Holta
-  Project: RSWalker 
-  Project URL: https://github.com/WarPie/RSWalker
+  Project: SimpleOCR 
+  Project URL: https://github.com/WarPie/OSR-OCR
   License: GNU GPL (http://www.gnu.org/licenses/gpl.html)
-  
-  Utils needed by the ocr engine.
+ 
+ Utilities needed for the OCR-engine.
 [==============================================================================}
 {$mode objfpc}{$H+}
 {$macro on}

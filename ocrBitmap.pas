@@ -1,8 +1,8 @@
 unit OCRBitmap;
 {==============================================================================]
   Author: Jarl K. Holta
-  Project: RSWalker 
-  Project URL: https://github.com/WarPie/RSWalker
+  Project: SimpleOCR
+  Project URL: https://github.com/WarPie/OSR-OCR
   License: GNU GPL (http://www.gnu.org/licenses/gpl.html)
   
   A minimalistic bitmap type.

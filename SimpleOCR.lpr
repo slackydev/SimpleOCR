@@ -1,19 +1,18 @@
 library SimpleOCR;
 {==============================================================================]
   Author: Jarl K. Holta
-  Project: RSWalker 
-  Project URL: https://github.com/WarPie/RSWalker
+  Project: SimpleOCR 
+  Project URL: https://github.com/WarPie/OSR-OCR
   License: GNU GPL (http://www.gnu.org/licenses/gpl.html)
 [==============================================================================}
 {$mode objfpc}{$H+}
 {$macro on}
 {$inline on}
 
-{$DEFINE callconv:=
+{$DEFINE callconv :=
   {$IFDEF WINDOWS}{$IFDEF CPU32}cdecl;{$ELSE}{$ENDIF}{$ENDIF}
   {$IFDEF LINUX}{$IFDEF CPU32}cdecl;{$ELSE}{$ENDIF}{$ENDIF}
 }
-
 
 uses
   SysUtils,
@@ -26,16 +25,13 @@ uses
 
 {$I SimbaPlugin.inc}
 
-{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=]
- Export our functions, name, information etc...
- All that is needed for scar to see this as a DLL.
-[=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
-function GetPluginABIVersion: Integer; cdecl; export;
+
+function GetPluginABIVersion: Integer; callconv export;
 begin
   Result := 2;
 end;
 
-procedure SetPluginMemManager(MemMgr : TMemoryManager); cdecl; export;
+procedure SetPluginMemManager(MemMgr : TMemoryManager); callconv export;
 begin
   if memisset then
     exit;
@@ -45,19 +41,19 @@ begin
 end;
 
 
-procedure OnDetach; cdecl; export;
+procedure OnDetach; callconv export;
 begin
   SetMemoryManager(OldMemoryManager);
 end;
 
 
-function GetFunctionCount: Integer; cdecl; export;
+function GetFunctionCount: Integer; callconv export;
 begin
   if not MethodsLoaded then LoadExports;
   Result := Length(Methods);
 end;
 
-function GetFunctionInfo(x: Integer; var ProcAddr: Pointer; var ProcDef: PChar): Integer; cdecl; export;
+function GetFunctionInfo(x: Integer; var ProcAddr: Pointer; var ProcDef: PChar): Integer; callconv export;
 begin
   Result := x;
   if (x > -1) and InRange(x, 0, High(Methods)) then
@@ -70,13 +66,13 @@ end;
 
 
 
-function GetTypeCount: Integer; cdecl; export;
+function GetTypeCount: Integer; callconv export;
 begin
   if not TypesLoaded then LoadExports;
   Result := Length(TypeDefs);
 end;
 
-function GetTypeInfo(x: Integer; var TypeName, TypeDef: PChar): integer; cdecl; export;
+function GetTypeInfo(x: Integer; var TypeName, TypeDef: PChar): integer; callconv export;
 begin
   Result := x;
   if (x > -1) and InRange(x, 0, High(TypeDefs)) then
