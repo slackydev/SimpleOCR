@@ -33,7 +33,7 @@ Keep in mind that the engine expects pixel precision, so, `TBox.x1`, and special
 
 A useful thing to familiarize yourself with is `TCompareRules`.
 ```pascal
-  packed record
+  TCompareRules = packed record
     Color, ColorMaxDiff: Int32; //color and tolerance
     
     UseShadow: LongBool;        //rely on shadow? if yes then we can safely ignore colors if wanted (color = -1)
