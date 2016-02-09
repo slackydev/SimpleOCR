@@ -1,11 +1,11 @@
 # OSR-OCR
-Simple OCR engine to read text at static coordinates in the game Oldschool RuneScape 
+Simple OCR engine to read text at static coordinates in "RuneScape"
 
 ------
 
 Usage:
 ------
-The following line should be added to your script, or include:
+The following line should be added to your script, or include, it's used to keep the OCR engine up to date with the scripts client.
 
 ```pascal
 function TSimpleOCR.Recognize(B:TBox; Filter:TCompareRules; MaxWalk:Int32=40): String; override;
@@ -23,10 +23,11 @@ var
   filterReules:TCompareRules = [-1, 85, True, 55]; (* any color, 85 tolerance, Use shadow!, shadow not brigther than 55! *) 
 begin
   OCR.Init(FontPath+'UpCharsEx');
-  str := OCR.Recognize(IntToBox(10,10,500,30), filterReules);
+  str := OCR.Recognize(IntToBox(7,7,500,30), filterReules);
   WriteLn(str);
 end;
 ```
+Keep in mind that the engine expects pixel precision, so, `TBox.x1`, and specially `TBox.y1` should be set perferectly.
 
 -------
 
