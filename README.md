@@ -27,7 +27,7 @@ begin
   WriteLn(str);
 end;
 ```
-Keep in mind that the engine expects pixel precision, so, `TBox.x1`, and specially `TBox.y1` should be set perferectly.
+Keep in mind that the engine expects pixel precision, so, `TBox.x1`, and specially `TBox.y1` should be set perferectly. You will get the point if you tinker about with it ;)
 
 -------
 
