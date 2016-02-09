@@ -2,7 +2,7 @@
 Simple OCR engine to read text at static coordinates in the game Oldschool RuneScape 
 
 Usage:
-------
+~~~~~~
 
 The following line should be added to your script, or include:
 ```pascal
@@ -18,9 +18,26 @@ Now it's just a matter of loading up your font, and start recognizing text:
 var 
   OCR:TSimpleOCR;
   str:String;
+  filterReules:TCompareRules = [-1, 85, True, 55]; (* any color, 85 tolerance, Use shadow!, shadow not brigther than 55! *) 
 begin
   OCR.Init(FontPath+'UpCharsEx');
-  str := OCR.Recognize(IntToBox(10,10,500,30);
+  str := OCR.Recognize(IntToBox(10,10,500,30), filterReules);
   WriteLn(str);
 end;
 ```
+
+-------
+
+A useful thing to familiarize yourself with is `TCompareRules`.
+```pascal
+  packed record
+    Color, ColorMaxDiff: Int32; //color and tolerance
+    
+    UseShadow: LongBool;        //rely on shadow? if yes then we can safely ignore colors if wanted (color = -1)
+    ShadowMaxValue:Int32;       //max brightness of the shadow (0..255)
+    
+    Threshold: Int32;           //we can use threshold instead tho to get it working with most colors.
+    ThreshInv: LongBool;        //? invert the threshold, so that dark = bright, bright = dark?
+  end;
+```
+Notice that if the color is set to `-1` either shadow, or Threshold must be defined.
