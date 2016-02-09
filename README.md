@@ -20,10 +20,10 @@ Now it's just a matter of loading up your font, and start recognizing text:
 var 
   OCR:TSimpleOCR;
   str:String;
-  filterReules:TCompareRules = [-1, 85, True, 55]; (* any color, 85 tolerance, Use shadow!, shadow not brigther than 55! *) 
+  filterRules:TCompareRules = [-1, 85, True, 55]; (* any color, 85 tolerance, Use shadow!, shadow max brightness: 55 *) 
 begin
   OCR.Init(FontPath+'UpCharsEx');
-  str := OCR.Recognize(IntToBox(7,7,500,30), filterReules);
+  str := OCR.Recognize(IntToBox(7,7,500,30), filterRules);
   WriteLn(str);
 end;
 ```
@@ -40,7 +40,7 @@ A useful thing to familiarize yourself with is `TCompareRules`.
     ShadowMaxValue:Int32;       //max brightness of the shadow (0..255)
     
     Threshold: Int32;           //we can use threshold instead tho to get it working with most colors.
-    ThreshInv: LongBool;        //? invert the threshold, so that dark = bright, bright = dark?
+    ThreshInv: LongBool;        //invert the threshold?
   end;
 ```
 Notice that if the color is set to `-1` either shadow, or Threshold must be defined.
