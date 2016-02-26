@@ -39,7 +39,7 @@ begin
           '  loaded, hasShadow:LongBool;'  +#13#10+
           '  pts,shadow,bad:TPointArray;'  +#13#10+
           'end;');
-  addType('TFontSet',
+  addType('TFontset',
           'packed record'                  +#13#10+
           '  FData: Array of TFontChar;'   +#13#10+
           '  SpaceWidth: Int32;'           +#13#10+
@@ -58,19 +58,20 @@ begin
           '  FontData: TFontSet;'          +#13#10+
           '  ClientID: TTarget_Exported;'  +#13#10+
           '  Client:   T2DIntArray;'       +#13#10+
+          '  __maxShadowAvg: Int32;'       +#13#10+
           '  __debugging: LongBool;'       +#13#10+
           'end;');
 
 
   addMethod('procedure TFontSet.Load(Font:AnsiString; Space:Int32=4);', @TFontSet_Load);
   addMethod('procedure TFontSet.Free();', @TFontSet_Free);
-  addMethod('procedure TSimpleOCR.Init(Font:TFontSet; Dbg:LongBool=False; AClient:TTarget_Exported=ExportImageTarget()); native;', @TSimpleOCR_Init);
-  addMethod('procedure TSimpleOCR.Init(Font:AnsiString; SpaceWidth:Int32=4; Dbg:LongBool=False; AClient:TTarget_Exported=ExportImageTarget()); overload; native;', @TSimpleOCR_Init2);
-  addMethod('procedure TSimpleOCR.SetFont(Font:TFontSet); native;', @TSimpleOCR_SetFont);
+  addMethod('procedure TSimpleOCR.Init(FontPath:TFontSet; AClient:TTarget_Exported=ExportImageTarget()); native;', @TSimpleOCR_Init);
+  addMethod('procedure TSimpleOCR.Init(Font:AnsiString; SpaceWidth:Int32=4; AClient:TTarget_Exported=ExportImageTarget()); overload; native;', @TSimpleOCR_Init2);
+  addMethod('procedure TSimpleOCR.SetFont(FontPath:TFontSet); native;', @TSimpleOCR_SetFont);
   addMethod('procedure TSimpleOCR.SetFont(Font:AnsiString; SpaceWidth:Int32=4); overload; native;', @TSimpleOCR_SetFont2);
   addMethod('procedure TSimpleOCR.Free(); native;', @TSimpleOCR_Free);
-  addMethod('function TSimpleOCR.Recognize(B:TBox; Filter:TCompareRules; MaxWalk:Int32=70): AnsiString; native;', @TSimpleOCR_Recognize);
-  addMethod('function TSimpleOCR.Recognize(AClient:T2DIntArray; Filter:TCompareRules; MaxWalk:Int32=70): AnsiString; overload; native;', @TSimpleOCR_Recognize2);
+  addMethod('function TSimpleOCR.Recognize(B:TBox; Filter:TCompareRules; MaxWalk:Int32=40): AnsiString; native;', @TSimpleOCR_Recognize);
+  addMethod('function TSimpleOCR.RecognizeEx(AClient:T2DIntArray; Filter:TCompareRules; MaxWalk:Int32=40): AnsiString; native;', @TSimpleOCR_RecognizeEx);
 
   MethodsLoaded := True;
   TypesLoaded := True;

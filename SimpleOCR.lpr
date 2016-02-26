@@ -2,8 +2,8 @@ library SimpleOCR;
 {==============================================================================]
   Author: Jarl K. Holta
   Project: SimpleOCR 
-  Project URL: https://github.com/WarPie/OSR-OCR
-  License: GNU GPL (http://www.gnu.org/licenses/gpl.html)
+  Project URL: https://github.com/WarPie/SimpleOCR
+  License: GNU GPL v3 (http://www.gnu.org/licenses/gpl.html)
 [==============================================================================}
 {$mode objfpc}{$H+}
 {$macro on}

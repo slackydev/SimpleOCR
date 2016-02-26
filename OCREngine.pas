@@ -2,8 +2,8 @@ unit OCREngine;
 {==============================================================================]
   Author: Jarl K. Holta
   Project: SimpleOCR 
-  Project URL: https://github.com/WarPie/OSR-OCR
-  License: GNU GPL (http://www.gnu.org/licenses/gpl.html)
+  Project URL: https://github.com/WarPie/SimpleOCR
+  License: GNU GPL v3 (http://www.gnu.org/licenses/gpl.html)
 [==============================================================================}
 {$mode objfpc}{$H+}
 {$macro on}
@@ -15,7 +15,6 @@ unit OCREngine;
   {$IFDEF WINDOWS}{$IFDEF CPU32}cdecl;{$ELSE}{$ENDIF}{$ENDIF}
   {$IFDEF LINUX}{$IFDEF CPU32}cdecl;{$ELSE}{$ENDIF}{$ENDIF}
 }
-
 interface
 
 uses
@@ -60,18 +59,19 @@ type
     FontData: TFontSet;
     ClientID: TTarget;
     Client:   TIntMatrix;
-    __debugging: Boolean;
+    __maxShadowBr: Int32;
+    __debugging: LongBool;
     
-    procedure Init(Font:String; Space:Int32; Debug:LongBool; AClient:TTarget);
-    procedure Init(Font:TFontSet; Debug:LongBool; AClient:TTarget); overload;
+    procedure Init(Font:String; Space:Int32; AClient:TTarget);
+    procedure Init(Font:TFontSet; AClient:TTarget); overload;
     procedure Free();
 
     procedure SetFont(Font:String; Space:Int32=4);
     procedure SetFont(Font:TFontSet); overload;
     procedure InitClient(B:TBox; var Filter:TCompareRules);
     function CompareChar(chr:TFontChar; offset:TPoint; Info:TCompareRules): Int32;
-    function Recognize(B:TBox; Filter:TCompareRules; MaxWalk:Int32=50): String;
-    function Recognize(AClient:TIntMatrix; Filter:TCompareRules; MaxWalk:Int32=50): String; overload;
+    function Recognize(B:TBox; Filter:TCompareRules; MaxWalk:Int32): String;
+    function RecognizeEx(AClient:TIntMatrix; Filter:TCompareRules; MaxWalk:Int32): String;
   end;
 
 
@@ -84,7 +84,7 @@ procedure TSimpleOCR_Free(const Params: PParamArray); callconv export;
 procedure TSimpleOCR_SetFont(const Params: PParamArray); callconv export;
 procedure TSimpleOCR_SetFont2(const Params: PParamArray); callconv export;
 procedure TSimpleOCR_Recognize(const Params: PParamArray; const Result:Pointer); callconv export;
-procedure TSimpleOCR_Recognize2(const Params: PParamArray; const Result:Pointer); callconv export;
+procedure TSimpleOCR_RecognizeEx(const Params: PParamArray; const Result:Pointer); callconv export;
 
 implementation 
 
@@ -164,20 +164,22 @@ end;
 
 
 //--| SimpleOCR |-------------------------------------------------------------\\
-procedure TSimpleOCR.Init(Font:String; Space:Int32; Debug:LongBool; AClient:TTarget);
+procedure TSimpleOCR.Init(Font:String; Space:Int32; AClient:TTarget);
 begin
   ClientID := AClient;
   FontData.Load(Font, Space);
   IsLoaded := Length(FontData.FData) > 0;
-  __debugging := Debug;
+  __debugging := False;
+  __maxShadowBr := 85;
 end;
 
-procedure TSimpleOCR.Init(Font:TFontSet; Debug:LongBool; AClient:TTarget); overload;
+procedure TSimpleOCR.Init(Font:TFontSet; AClient:TTarget); overload;
 begin
   ClientID := AClient;
   FontData := Font;
   IsLoaded := Length(FontData.FData) > 0;
-  __debugging := Debug;
+  __debugging := False;
+  __maxShadowBr := 85;
 end;
 
 procedure TSimpleOCR.Free();
@@ -221,8 +223,6 @@ var
   maxshd:Single;
   first,color:TRGB32;
   pt:TPoint;
-const
-  GRAYTONE:Int32 = 85; //max diff between the R,G,B values
 begin
   i := 0; test := 0; any := 0;
   if (chr.FHeight > Length(Client)) then Exit(-1);
@@ -232,7 +232,7 @@ begin
     if Info.UseShadow then
     begin
       maxshd := 2*Info.ShadowMaxValue;
-      if ((first.r+first.g+first.b) div 3 < GRAYTONE) and
+      if ((first.r+first.g+first.b) div 3 < self.__maxShadowBr) and
          ((first.R<maxshd) and (first.G<maxshd) and (first.B<maxshd)) then
         Exit(-1);
     end;
@@ -373,7 +373,8 @@ var
   space,i,x,width,height:Int32;
   hits,bestid,bestcount:Int32;
 begin
-  Space := 0; x := 0;
+  Space := 0;
+  x := 0;
   Filter.ColorMaxDiff := Sqr(Filter.ColorMaxDiff);
   Self.InitClient(B, Filter);
 
@@ -381,12 +382,13 @@ begin
 end;
 
 
-function TSimpleOCR.Recognize(AClient:TIntMatrix; Filter:TCompareRules; MaxWalk:Int32=50): String; overload;
+function TSimpleOCR.RecognizeEx(AClient:TIntMatrix; Filter:TCompareRules; MaxWalk:Int32=50): String;
 var
   space,i,x,width,height:Int32;
   hits,bestid,bestcount:Int32;
 begin
-  Space := 0; x := 0;
+  Space := 0;
+  x := 0;
   Filter.ColorMaxDiff := Sqr(Filter.ColorMaxDiff);
   Self.Client := AClient;
 
@@ -409,12 +411,12 @@ end;
 //------------------------------------------------------------------------------
 procedure TSimpleOCR_Init(const Params: PParamArray); callconv export;
 begin
-  PSimpleOCR(Params^[0])^.Init(PFontSet(Params^[1])^, PLongBool(Params^[2])^, PTarget(Params^[3])^);
+  PSimpleOCR(Params^[0])^.Init(PFontSet(Params^[1])^, PTarget(Params^[2])^);
 end;
 
 procedure TSimpleOCR_Init2(const Params: PParamArray); callconv export;
 begin
-  PSimpleOCR(Params^[0])^.Init(PAnsiString(Params^[1])^, PInteger(Params^[2])^, PLongBool(Params^[3])^, PTarget(Params^[4])^);
+  PSimpleOCR(Params^[0])^.Init(PAnsiString(Params^[1])^, PInteger(Params^[2])^, PTarget(Params^[3])^);
 end;
 
 procedure TSimpleOCR_Free(const Params: PParamArray); callconv export;
@@ -439,11 +441,11 @@ begin
                                                             PInteger(Params^[3])^);
 end;
 
-procedure TSimpleOCR_Recognize2(const Params: PParamArray; const Result:Pointer); callconv export;
+procedure TSimpleOCR_RecognizeEx(const Params: PParamArray; const Result:Pointer); callconv export;
 begin
-  PAnsiString(Result)^ := PSimpleOCR(Params^[0])^.Recognize(PIntMatrix(Params^[1])^,
-                                                            PCompareRules(Params^[2])^,
-                                                            PInteger(Params^[3])^);
+  PAnsiString(Result)^ := PSimpleOCR(Params^[0])^.RecognizeEx(PIntMatrix(Params^[1])^,
+                                                              PCompareRules(Params^[2])^,
+                                                              PInteger(Params^[3])^);
 end;
 
 end.
