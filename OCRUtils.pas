@@ -1,9 +1,9 @@
 unit OCRUtils;
 {==============================================================================]
-  Author: Jarl K. Holta
-  Project: SimpleOCR 
-  Project URL: https://github.com/WarPie/OSR-OCR
-  License: GNU GPL (http://www.gnu.org/licenses/gpl.html)
+  Copyright (c) 2016, Jarl `slacky` Holta
+  Project: SimpleOCR
+  Project URL: https://github.com/WarPie/SimpleOCR
+  License: GNU Lesser GPL (http://www.gnu.org/licenses/lgpl.html)
  
  Utilities needed for the OCR-engine.
 [==============================================================================}
@@ -190,17 +190,18 @@ begin
 end;
 
 function FindFontPath(Font:String): String;
+var
+  i,j:Int32;
+  paths:array [0..2] of string = ('Fonts/','Includes/','');
 begin
-  if not(Font[Length(Font)] = '\') then Font += '\';
+  if not(Font[Length(Font)] = '/') then Font += '/';
   if DirectoryExists(Font) then Exit(Font);
-  if DirectoryExists('Fonts\'+Font) then Exit('Fonts\'+Font);
-  if DirectoryExists('..\Fonts\'+Font) then Exit('..\Fonts\'+Font);
-  if DirectoryExists('..\..\Fonts\'+Font) then Exit('..\..\Fonts\'+Font);
-  if DirectoryExists('..\..\..\Fonts\'+Font) then Exit('..\..\..\Fonts\'+Font);
 
-  if DirectoryExists('Includes\'+Font) then Exit('Includes\'+Font);
-  if DirectoryExists('..\Includes\'+Font) then Exit('..\Includes\'+Font);
-  if DirectoryExists('..\..\Includes\'+Font) then Exit('..\..\Includes\'+Font);
+  for i:=0 to High(paths) do
+    for j:=0 to 6 do
+      if DirectoryExists(paths[i]+Font) then Exit(paths[i] + Font)
+      else paths[i] := '../' + paths[i];
+
   Result := Font;
 end;
 

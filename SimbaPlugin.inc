@@ -1,7 +1,9 @@
-{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=]
- Copyright (c) 2014, Jarl K. <Slacky> Holta || http://github.com/WarPie
- All rights reserved.
-[=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}
+{==============================================================================]
+  Copyright (c) 2016, Jarl `slacky` Holta
+  Project: SimpleOCR
+  Project URL: https://github.com/WarPie/SimpleOCR
+  License: GNU Lesser GPL (http://www.gnu.org/licenses/lgpl.html)
+[==============================================================================}
 var
   Methods: array of record procAddr: Pointer; ProcDef:PChar; end;
   TypeDefs: array of record TypeName, TypeDef:PChar; end;

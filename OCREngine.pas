@@ -1,9 +1,9 @@
 unit OCREngine;
 {==============================================================================]
-  Author: Jarl K. Holta
-  Project: SimpleOCR 
+  Copyright (c) 2016, Jarl `slacky` Holta
+  Project: SimpleOCR
   Project URL: https://github.com/WarPie/SimpleOCR
-  License: GNU GPL v3 (http://www.gnu.org/licenses/gpl.html)
+  License: GNU Lesser GPL (http://www.gnu.org/licenses/lgpl.html)
 [==============================================================================}
 {$mode objfpc}{$H+}
 {$macro on}
