@@ -66,7 +66,7 @@ type
     procedure Init(Font:TFontSet; AClient:TTarget); overload;
     procedure Free();
 
-    procedure SetFont(Font:String; Space:Int32=4);
+    procedure SetFont(Font:String; Space:Int32);
     procedure SetFont(Font:TFontSet); overload;
     procedure InitClient(B:TBox; var Filter:TCompareRules);
     function CompareChar(chr:TFontChar; offset:TPoint; Info:TCompareRules): Int32;
@@ -93,7 +93,7 @@ uses
 
 
 //--| TFontSet |--------------------------------------------------------------\\
-procedure TFontSet.Load(Font:String; Space:Int32=4);
+procedure TFontSet.Load(Font:String; Space:Int32);
 var
   chars: TStringArray;
   TPA:TPointArray;
@@ -368,7 +368,7 @@ end;
     SetLength(Client, 0,0);
 }
 
-function TSimpleOCR.Recognize(B:TBox; Filter:TCompareRules; MaxWalk:Int32=50): String;
+function TSimpleOCR.Recognize(B:TBox; Filter:TCompareRules; MaxWalk:Int32): String;
 var
   space,i,x,width,height:Int32;
   hits,bestid,bestcount:Int32;
@@ -382,7 +382,7 @@ begin
 end;
 
 
-function TSimpleOCR.RecognizeEx(AClient:TIntMatrix; Filter:TCompareRules; MaxWalk:Int32=50): String;
+function TSimpleOCR.RecognizeEx(AClient:TIntMatrix; Filter:TCompareRules; MaxWalk:Int32): String;
 var
   space,i,x,width,height:Int32;
   hits,bestid,bestcount:Int32;
