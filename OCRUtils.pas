@@ -4,8 +4,8 @@ unit OCRUtils;
   Project: SimpleOCR
   Project URL: https://github.com/WarPie/SimpleOCR
   License: GNU Lesser GPL (http://www.gnu.org/licenses/lgpl.html)
- 
- Utilities needed for the OCR-engine.
+  
+  Utilities needed for the OCR-engine.
 [==============================================================================}
 {$mode objfpc}{$H+}
 {$macro on}

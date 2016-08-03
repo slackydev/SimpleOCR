@@ -1,9 +1,3 @@
-{==============================================================================]
-  Copyright (c) 2016, Jarl `slacky` Holta
-  Project: SimpleOCR
-  Project URL: https://github.com/WarPie/SimpleOCR
-  License: GNU Lesser GPL (http://www.gnu.org/licenses/lgpl.html)
-[==============================================================================}
 var
   Methods: array of record procAddr: Pointer; ProcDef:PChar; end;
   TypeDefs: array of record TypeName, TypeDef:PChar; end;
@@ -67,13 +61,13 @@ begin
 
   addMethod('procedure TFontSet.Load(Font:AnsiString; Space:Int32=4);', @TFontSet_Load);
   addMethod('procedure TFontSet.Free();', @TFontSet_Free);
-  addMethod('procedure TSimpleOCR.Init(FontPath:TFontSet; AClient:TTarget_Exported); native;', @TSimpleOCR_Init);
-  addMethod('procedure TSimpleOCR.Init(Font:AnsiString; SpaceWidth:Int32=4; AClient:TTarget_Exported); overload; native;', @TSimpleOCR_Init2);
+  addMethod('procedure TSimpleOCR.Init(FontPath:TFontSet); native;', @TSimpleOCR_Init);
+  addMethod('procedure TSimpleOCR.Init(Font:AnsiString; SpaceWidth:Int32=4); overload; native;', @TSimpleOCR_Init2);
   addMethod('procedure TSimpleOCR.SetFont(FontPath:TFontSet); native;', @TSimpleOCR_SetFont);
   addMethod('procedure TSimpleOCR.SetFont(Font:AnsiString; SpaceWidth:Int32=4); overload; native;', @TSimpleOCR_SetFont2);
   addMethod('procedure TSimpleOCR.Free(); native;', @TSimpleOCR_Free);
-  addMethod('function TSimpleOCR.Recognize(B:TBox; Filter:TCompareRules; MaxWalk:Int32=40): AnsiString; native;', @TSimpleOCR_Recognize);
-  addMethod('function TSimpleOCR.RecognizeEx(AClient:T2DIntArray; Filter:TCompareRules; MaxWalk:Int32=40): AnsiString; native;', @TSimpleOCR_RecognizeEx);
+  addMethod('function TSimpleOCR.Recognize(B:TBox; Filter:TCompareRules; MaxWalk:Int32=50): AnsiString; native;', @TSimpleOCR_Recognize);
+  addMethod('function TSimpleOCR.RecognizeEx(AClient:T2DIntArray; Filter:TCompareRules; MaxWalk:Int32=50): AnsiString; native;', @TSimpleOCR_RecognizeEx);
 
   MethodsLoaded := True;
   TypesLoaded := True;

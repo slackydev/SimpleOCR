@@ -3,7 +3,7 @@
   <ProjectSession>
     <PathDelim Value="\"/>
     <Version Value="9"/>
-    <BuildModes Active="Win64"/>
+    <BuildModes Active="Win32"/>
     <Units Count="10">
       <Unit0>
         <Filename Value="SimpleOCR.lpr"/>
@@ -50,7 +50,7 @@
         <IsVisibleTab Value="True"/>
         <EditorIndex Value="4"/>
         <TopLine Value="189"/>
-        <CursorPos X="36" Y="214"/>
+        <CursorPos X="30" Y="202"/>
         <UsageCount Value="21"/>
         <Loaded Value="True"/>
       </Unit6>

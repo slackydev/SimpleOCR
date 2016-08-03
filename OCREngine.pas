@@ -40,7 +40,7 @@ type
     FData: TFontChars;
     SpaceWidth: Int32;
     
-    procedure Load(Font:String; Space:Int32=4);
+    procedure Load(Font:String; Space:Int32);
     procedure Free();
   end;
 
@@ -62,8 +62,8 @@ type
     __maxShadowBr: Int32;
     __debugging: LongBool;
     
-    procedure Init(Font:String; Space:Int32; AClient:TTarget);
-    procedure Init(Font:TFontSet; AClient:TTarget); overload;
+    procedure Init(Font:String; Space:Int32);
+    procedure Init(Font:TFontSet); overload;
     procedure Free();
 
     procedure SetFont(Font:String; Space:Int32);
@@ -164,18 +164,16 @@ end;
 
 
 //--| SimpleOCR |-------------------------------------------------------------\\
-procedure TSimpleOCR.Init(Font:String; Space:Int32; AClient:TTarget);
+procedure TSimpleOCR.Init(Font:String; Space:Int32);
 begin
-  ClientID := AClient;
   FontData.Load(Font, Space);
   IsLoaded := Length(FontData.FData) > 0;
   __debugging := False;
   __maxShadowBr := 85;
 end;
 
-procedure TSimpleOCR.Init(Font:TFontSet; AClient:TTarget); overload;
+procedure TSimpleOCR.Init(Font:TFontSet); overload;
 begin
-  ClientID := AClient;
   FontData := Font;
   IsLoaded := Length(FontData.FData) > 0;
   __debugging := False;
@@ -187,7 +185,7 @@ begin
   if IsLoaded then FontData.Free();
 end;
 
-procedure TSimpleOCR.SetFont(Font:String; Space:Int32=4);
+procedure TSimpleOCR.SetFont(Font:String; Space:Int32);
 begin
   FontData.Load(Font, Space);
   IsLoaded := Length(FontData.FData) > 0;
@@ -411,12 +409,12 @@ end;
 //------------------------------------------------------------------------------
 procedure TSimpleOCR_Init(const Params: PParamArray); callconv export;
 begin
-  PSimpleOCR(Params^[0])^.Init(PFontSet(Params^[1])^, PTarget(Params^[2])^);
+  PSimpleOCR(Params^[0])^.Init(PFontSet(Params^[1])^);
 end;
 
 procedure TSimpleOCR_Init2(const Params: PParamArray); callconv export;
 begin
-  PSimpleOCR(Params^[0])^.Init(PAnsiString(Params^[1])^, PInteger(Params^[2])^, PTarget(Params^[3])^);
+  PSimpleOCR(Params^[0])^.Init(PAnsiString(Params^[1])^, PInteger(Params^[2])^);
 end;
 
 procedure TSimpleOCR_Free(const Params: PParamArray); callconv export;
