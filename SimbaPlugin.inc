@@ -66,8 +66,8 @@ begin
   addMethod('procedure TSimpleOCR.SetFont(FontPath:TFontSet); native;', @TSimpleOCR_SetFont);
   addMethod('procedure TSimpleOCR.SetFont(Font:AnsiString; SpaceWidth:Int32=4); overload; native;', @TSimpleOCR_SetFont2);
   addMethod('procedure TSimpleOCR.Free(); native;', @TSimpleOCR_Free);
-  addMethod('function TSimpleOCR.Recognize(B:TBox; Filter:TCompareRules; MaxWalk:Int32=50): AnsiString; native;', @TSimpleOCR_Recognize);
-  addMethod('function TSimpleOCR.RecognizeEx(AClient:T2DIntArray; Filter:TCompareRules; MaxWalk:Int32=50): AnsiString; native;', @TSimpleOCR_RecognizeEx);
+  addMethod('function TSimpleOCR.Recognize(B:TBox; Filter:TCompareRules; MaxWalk:Int32=40): AnsiString; native;', @TSimpleOCR_Recognize);
+  addMethod('function TSimpleOCR.RecognizeEx(AClient:T2DIntArray; Filter:TCompareRules; MaxWalk:Int32=40): AnsiString; native;', @TSimpleOCR_RecognizeEx);
 
   MethodsLoaded := True;
   TypesLoaded := True;
