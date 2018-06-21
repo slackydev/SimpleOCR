@@ -20,77 +20,107 @@ uses
   Classes,
   OCRBitmap,
   OCRTypes,
-  OCREngine;
+  OCREngine,
+  SimbaPlugin;
 
 
-{$I SimbaPlugin.inc}
-
-
-function GetPluginABIVersion: Integer; callconv export;
+// ------------------------------------------------------------------------------------------------
+// Export definitions
+// ------------------------------------------------------------------------------------------------
+procedure TFontSet_Load(const Params: PParamArray); callconv export;
 begin
-  Result := 2;
+  TFontSet(Params^[0]^).Load(AnsiString(Params^[1]^), Int32(Params^[2]^));
 end;
 
-procedure SetPluginMemManager(MemMgr : TMemoryManager); callconv export;
+procedure TFontSet_Free(const Params: PParamArray); callconv export;
 begin
-  if memisset then
-    exit;
-  GetMemoryManager(OldMemoryManager);
-  SetMemoryManager(MemMgr);
-  memisset := True;
+  TFontSet(Params^[0]^).Free();
 end;
 
 
-procedure OnDetach; callconv export;
+procedure TSimpleOCR_Init(const Params: PParamArray); callconv export;
 begin
-  SetMemoryManager(OldMemoryManager);
+  TSimpleOCR(Params^[0]^).Init(TFontSet(Params^[1]^));
+end;
+
+procedure TSimpleOCR_Init2(const Params: PParamArray); callconv export;
+begin
+  TSimpleOCR(Params^[0]^).Init(AnsiString(Params^[1]^), Int32(Params^[2]^));
+end;
+
+procedure TSimpleOCR_Free(const Params: PParamArray); callconv export;
+begin
+  TSimpleOCR(Params^[0]^).Free();
+end;
+
+procedure TSimpleOCR_SetFont(const Params: PParamArray); callconv export;
+begin
+  TSimpleOCR(Params^[0]^).SetFont(PFontSet(Params^[1])^);
+end;
+
+procedure TSimpleOCR_SetFont2(const Params: PParamArray); callconv export;
+begin
+  TSimpleOCR(Params^[0]^).SetFont(AnsiString(Params^[1]^), Int32(Params^[2]^));
+end;
+
+procedure TSimpleOCR_Recognize(const Params: PParamArray; const Result:Pointer); callconv export;
+begin
+  AnsiString(Result^) := TSimpleOCR(Params^[0]^).Recognize(TBox(Params^[1]^),
+                                                            TCompareRules(Params^[2]^),
+                                                            Int32(Params^[3]^));
+end;
+
+procedure TSimpleOCR_RecognizeEx(const Params: PParamArray; const Result:Pointer); callconv export;
+begin
+  AnsiString(Result^) := TSimpleOCR(Params^[0]^).RecognizeEx(TIntMatrix(Params^[1]^),
+                                                             TCompareRules(Params^[2]^),
+                                                             Int32(Params^[3]^));
 end;
 
 
-function GetFunctionCount: Integer; callconv export;
+
+// ------------------------------------------------------------------------------------------------
+// Export to Simba
+// ------------------------------------------------------------------------------------------------
 begin
-  if not MethodsLoaded then LoadExports;
-  Result := Length(Methods);
-end;
-
-function GetFunctionInfo(x: Integer; var ProcAddr: Pointer; var ProcDef: PChar): Integer; callconv export;
-begin
-  Result := x;
-  if (x > -1) and InRange(x, 0, High(Methods)) then
-  begin
-    ProcAddr := Methods[x].procAddr;
-    StrPCopy(ProcDef, Methods[x].ProcDef);
-    if (x = High(Methods)) then FreeMethods;
-  end;
-end;
-
-
-
-function GetTypeCount: Integer; callconv export;
-begin
-  if not TypesLoaded then LoadExports;
-  Result := Length(TypeDefs);
-end;
-
-function GetTypeInfo(x: Integer; var TypeName, TypeDef: PChar): integer; callconv export;
-begin
-  Result := x;
-  if (x > -1) and InRange(x, 0, High(TypeDefs)) then
-  begin
-    StrPCopy(TypeName, TypeDefs[x].TypeName);
-    StrPCopy(TypeDef,  TypeDefs[x].TypeDef);
-    if (x = High(TypeDefs)) then FreeTypes;
-  end;
-end;
+  AddGlobalType('TFontChar',
+                'packed record'                  +LineEnding+
+                '  FChar:AnsiChar;'              +LineEnding+
+                '  FWidth,FHeight:Int32;'        +LineEnding+
+                '  Loaded, HasShadow:LongBool;'  +LineEnding+
+                '  PTS,Shadow,Bad:TPointArray;'  +LineEnding+
+                'end;');
+  AddGlobalType('TFontset',
+                'packed record'                  +LineEnding+
+                '  FData: Array of TFontChar;'   +LineEnding+
+                '  SpaceWidth: Int32;'           +LineEnding+
+                'end;');
+  AddGlobalType('TCompareRules',
+                'packed record'                  +LineEnding+
+                '  Color, ColorMaxDiff: Int32;'  +LineEnding+
+                '  UseShadow: LongBool;'         +LineEnding+
+                '  ShadowMaxValue:Int32;'        +LineEnding+
+                '  Threshold: Int32;'            +LineEnding+
+                '  ThreshInv: LongBool;'         +LineEnding+
+                'end;');
+  AddGlobalType('TSimpleOCR',
+                'packed record'                  +LineEnding+
+                '  IsLoaded: LongBool;'          +LineEnding+
+                '  FontData: TFontSet;'          +LineEnding+
+                '  ClientID: TTarget_Exported;'  +LineEnding+
+                '  Client:   T2DIntArray;'       +LineEnding+
+                '  __maxShadowAvg: Int32;'       +LineEnding+
+                '  __debugging: LongBool;'       +LineEnding+
+                'end;');
 
 
-exports GetPluginABIVersion;
-exports SetPluginMemManager;
-exports GetTypeCount;
-exports GetTypeInfo;
-exports GetFunctionCount;
-exports GetFunctionInfo;
-exports OnDetach;
-
-begin
+  AddLPCMethod(@TFontSet_Load,         'procedure TFontSet.Load(Font:AnsiString; Space:Int32=4);');
+  AddLPCMethod(@TFontSet_Free,         'procedure TFontSet.Free();');
+  AddLPCMethod(@TSimpleOCR_Init,       'procedure TSimpleOCR.Init(FontPath: TFontSet);');
+  AddLPCMethod(@TSimpleOCR_Init2,      'procedure TSimpleOCR.Init(Font: AnsiString; SpaceWidth: Int32=4); overload;');
+  AddLPCMethod(@TSimpleOCR_SetFont,    'procedure TSimpleOCR.SetFont(FontPath:TFontSet);');
+  AddLPCMethod(@TSimpleOCR_SetFont2,   'procedure TSimpleOCR.SetFont(Font:AnsiString; SpaceWidth:Int32=4); overload;');
+  AddLPCMethod(@TSimpleOCR_Free,       'procedure TSimpleOCR.Free();');
+  AddLPCMethod(@TSimpleOCR_Recognize,  'function TSimpleOCR.Recognize(B:TBox; Filter:TCompareRules; MaxWalk:Int32=40): AnsiString;');
+  AddLPCMethod(@TSimpleOCR_RecognizeEx,'function TSimpleOCR.RecognizeEx(AClient:T2DIntArray; Filter:TCompareRules; MaxWalk:Int32=40): AnsiString;');
 end.

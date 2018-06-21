@@ -23,6 +23,7 @@ uses
   OCRUtils,
   OCRTypes;
 
+
 type
   PFontChar = ^TFontChar;
   TFontChar = packed record
@@ -35,6 +36,7 @@ type
   end;
   TFontChars = Array of TFontChar;
 
+
   PFontSet = ^TFontSet;
   TFontSet = packed record
     FData: TFontChars;
@@ -44,6 +46,7 @@ type
     procedure Free();
   end;
 
+
   PCompareRules = ^TCompareRules;
   TCompareRules = packed record
     Color, ColorMaxDiff: Int32; //-1 = any color
@@ -52,6 +55,7 @@ type
     Threshold: Int32;
     ThreshInv: LongBool;
   end;
+
 
   PSimpleOCR = ^TSimpleOCR;
   TSimpleOCR = packed record
@@ -75,16 +79,6 @@ type
   end;
 
 
-procedure TFontSet_Load(var Self:TFontSet; Font:AnsiString; SpaceWidth: Int32); callconv export;
-procedure TFontSet_Free(var Self:TFontSet); callconv export;
-
-procedure TSimpleOCR_Init(const Params: PParamArray); callconv export;
-procedure TSimpleOCR_Init2(const Params: PParamArray); callconv export;
-procedure TSimpleOCR_Free(const Params: PParamArray); callconv export;
-procedure TSimpleOCR_SetFont(const Params: PParamArray); callconv export;
-procedure TSimpleOCR_SetFont2(const Params: PParamArray); callconv export;
-procedure TSimpleOCR_Recognize(const Params: PParamArray; const Result:Pointer); callconv export;
-procedure TSimpleOCR_RecognizeEx(const Params: PParamArray; const Result:Pointer); callconv export;
 
 implementation 
 
@@ -393,58 +387,6 @@ begin
   MACRO_OCR_BODY
 end;
 
-
-//------------------------------------------------------------------------------
-procedure TFontSet_Load(var Self:TFontSet; Font:AnsiString; SpaceWidth: Int32); callconv export;
-begin
-  Self.Load(Font, SpaceWidth);
-end;
-
-procedure TFontSet_Free(var Self:TFontSet); callconv export;
-begin
-  Self.Free();
-end;
-
-
-//------------------------------------------------------------------------------
-procedure TSimpleOCR_Init(const Params: PParamArray); callconv export;
-begin
-  PSimpleOCR(Params^[0])^.Init(PFontSet(Params^[1])^);
-end;
-
-procedure TSimpleOCR_Init2(const Params: PParamArray); callconv export;
-begin
-  PSimpleOCR(Params^[0])^.Init(PAnsiString(Params^[1])^, PInteger(Params^[2])^);
-end;
-
-procedure TSimpleOCR_Free(const Params: PParamArray); callconv export;
-begin
-  PSimpleOCR(Params^[0])^.Free();
-end;
-
-procedure TSimpleOCR_SetFont(const Params: PParamArray); callconv export;
-begin
-  PSimpleOCR(Params^[0])^.SetFont(PFontSet(Params^[1])^);
-end;
-
-procedure TSimpleOCR_SetFont2(const Params: PParamArray); callconv export;
-begin
-  PSimpleOCR(Params^[0])^.SetFont(PAnsiString(Params^[1])^, PInteger(Params^[2])^);
-end;
-
-procedure TSimpleOCR_Recognize(const Params: PParamArray; const Result:Pointer); callconv export;
-begin
-  PAnsiString(Result)^ := PSimpleOCR(Params^[0])^.Recognize(PBox(Params^[1])^,
-                                                            PCompareRules(Params^[2])^,
-                                                            PInteger(Params^[3])^);
-end;
-
-procedure TSimpleOCR_RecognizeEx(const Params: PParamArray; const Result:Pointer); callconv export;
-begin
-  PAnsiString(Result)^ := PSimpleOCR(Params^[0])^.RecognizeEx(PIntMatrix(Params^[1])^,
-                                                              PCompareRules(Params^[2])^,
-                                                              PInteger(Params^[3])^);
-end;
 
 end.
 
