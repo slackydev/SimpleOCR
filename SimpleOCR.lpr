@@ -78,6 +78,9 @@ begin
 end;
 
 
+// ------------------------------------------------------------------------------------------------
+// Export for Simba
+// ------------------------------------------------------------------------------------------------
 exports GetPluginABIVersion;
 exports SetPluginMemManager;
 exports GetFunctionCount;
@@ -88,11 +91,7 @@ exports GetTypeInfo;
 exports OnDetach;
 
 
-
-// ------------------------------------------------------------------------------------------------
-// Export to Simba
-// ------------------------------------------------------------------------------------------------
-begin
+initialization
   AddGlobalType('TFontChar',
                 'packed record'                  +LineEnding+
                 '  FChar:AnsiChar;'              +LineEnding+
