@@ -78,6 +78,16 @@ begin
 end;
 
 
+exports GetPluginABIVersion;
+exports SetPluginMemManager;
+exports GetFunctionCount;
+exports GetFunctionInfo;
+exports GetTypeCount;
+exports GetTypeInfo;
+//exports OnAttach;
+exports OnDetach;
+
+
 
 // ------------------------------------------------------------------------------------------------
 // Export to Simba

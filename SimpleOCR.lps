@@ -3,7 +3,7 @@
   <ProjectSession>
     <PathDelim Value="\"/>
     <Version Value="10"/>
-    <BuildModes Count="1" Active="Release">
+    <BuildModes Count="1" Active="Win32-Force-FPC2.6">
       <Item1 Name="Win32-Force-FPC2.6">
         <CompilerOptions>
           <Version Value="11"/>
@@ -43,8 +43,8 @@
         <Filename Value="SimpleOCR.lpr"/>
         <IsPartOfProject Value="True"/>
         <IsVisibleTab Value="True"/>
-        <TopLine Value="104"/>
-        <CursorPos X="43" Y="122"/>
+        <TopLine Value="64"/>
+        <CursorPos X="48" Y="89"/>
         <UsageCount Value="44"/>
         <Loaded Value="True"/>
       </Unit0>
@@ -108,8 +108,8 @@
       <Unit10>
         <Filename Value="SimbaPlugin.pas"/>
         <EditorIndex Value="1"/>
-        <TopLine Value="112"/>
-        <CursorPos Y="136"/>
+        <TopLine Value="139"/>
+        <CursorPos Y="145"/>
         <UsageCount Value="10"/>
         <Loaded Value="True"/>
       </Unit10>
