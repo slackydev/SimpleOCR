@@ -3,7 +3,7 @@
   <ProjectSession>
     <PathDelim Value="\"/>
     <Version Value="10"/>
-    <BuildModes Count="1" Active="Win32-Force-FPC2.6">
+    <BuildModes Count="1" Active="Debug">
       <Item1 Name="Win32-Force-FPC2.6">
         <CompilerOptions>
           <Version Value="11"/>
@@ -42,10 +42,9 @@
       <Unit0>
         <Filename Value="SimpleOCR.lpr"/>
         <IsPartOfProject Value="True"/>
-        <IsVisibleTab Value="True"/>
-        <TopLine Value="64"/>
-        <CursorPos X="48" Y="89"/>
-        <UsageCount Value="44"/>
+        <TopLine Value="39"/>
+        <CursorPos X="37" Y="45"/>
+        <UsageCount Value="45"/>
         <Loaded Value="True"/>
       </Unit0>
       <Unit1>
@@ -68,9 +67,8 @@
       <Unit4>
         <Filename Value="OCRBitmap.pas"/>
         <EditorIndex Value="2"/>
-        <TopLine Value="16"/>
-        <CursorPos X="122" Y="31"/>
-        <UsageCount Value="21"/>
+        <CursorPos Y="34"/>
+        <UsageCount Value="22"/>
         <Loaded Value="True"/>
       </Unit4>
       <Unit5>
@@ -81,9 +79,11 @@
       </Unit5>
       <Unit6>
         <Filename Value="OCREngine.pas"/>
+        <IsVisibleTab Value="True"/>
         <EditorIndex Value="4"/>
-        <CursorPos X="3" Y="19"/>
-        <UsageCount Value="21"/>
+        <TopLine Value="113"/>
+        <CursorPos X="56" Y="133"/>
+        <UsageCount Value="22"/>
         <Loaded Value="True"/>
       </Unit6>
       <Unit7>
@@ -95,8 +95,9 @@
       <Unit8>
         <Filename Value="OCRTypes.pas"/>
         <EditorIndex Value="3"/>
-        <CursorPos X="27" Y="21"/>
-        <UsageCount Value="20"/>
+        <TopLine Value="16"/>
+        <CursorPos X="17" Y="31"/>
+        <UsageCount Value="21"/>
         <Loaded Value="True"/>
       </Unit8>
       <Unit9>
@@ -108,13 +109,13 @@
       <Unit10>
         <Filename Value="SimbaPlugin.pas"/>
         <EditorIndex Value="1"/>
-        <TopLine Value="139"/>
+        <TopLine Value="10"/>
         <CursorPos Y="145"/>
-        <UsageCount Value="10"/>
+        <UsageCount Value="11"/>
         <Loaded Value="True"/>
       </Unit10>
     </Units>
-    <JumpHistory Count="15" HistoryIndex="14">
+    <JumpHistory Count="24" HistoryIndex="23">
       <Position1>
         <Filename Value="SimpleOCR.lpr"/>
         <Caret Line="17" Column="9"/>
@@ -175,6 +176,42 @@
         <Filename Value="SimpleOCR.lpr"/>
         <Caret Line="21" Column="27"/>
       </Position15>
+      <Position16>
+        <Filename Value="SimpleOCR.lpr"/>
+        <Caret Line="129" Column="29" TopLine="103"/>
+      </Position16>
+      <Position17>
+        <Filename Value="SimpleOCR.lpr"/>
+        <Caret Line="46" Column="11" TopLine="31"/>
+      </Position17>
+      <Position18>
+        <Filename Value="OCREngine.pas"/>
+        <Caret Line="69" Column="15" TopLine="54"/>
+      </Position18>
+      <Position19>
+        <Filename Value="OCREngine.pas"/>
+        <Caret Line="165" Column="6" TopLine="147"/>
+      </Position19>
+      <Position20>
+        <Filename Value="OCREngine.pas"/>
+        <Caret Line="45" Column="15" TopLine="30"/>
+      </Position20>
+      <Position21>
+        <Filename Value="SimpleOCR.lpr"/>
+        <Caret Line="46" Column="11" TopLine="31"/>
+      </Position21>
+      <Position22>
+        <Filename Value="OCREngine.pas"/>
+        <Caret Line="69" Column="15" TopLine="54"/>
+      </Position22>
+      <Position23>
+        <Filename Value="SimpleOCR.lpr"/>
+        <Caret Line="129" Column="27" TopLine="106"/>
+      </Position23>
+      <Position24>
+        <Filename Value="OCREngine.pas"/>
+        <Caret Line="148" Column="21" TopLine="137"/>
+      </Position24>
     </JumpHistory>
   </ProjectSession>
 </CONFIG>

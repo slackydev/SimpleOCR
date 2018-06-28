@@ -28,10 +28,10 @@ type
   PIntMatrix = ^TIntMatrix;
   TIntMatrix = array of TIntArray;
   
-  TBoolArray = Array of ByteBool;
-  TBoolMatrix = Array of TBoolArray;
+  TBoolArray = array of ByteBool;
+  TBoolMatrix = array of TBoolArray;
   
-  TStringArray = Array of String;
+  TStringArray = array of String;
 
   PBox = ^TBox;
   TBox = packed record

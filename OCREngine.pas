@@ -120,10 +120,10 @@ begin
       continue;
     end;
     FData[i].Loaded := BMP.FindColor(FData[i].PTS, $FFFFFF);
+    FData[i].FChar  := Chr(StrToInt(charid));
 
     if FData[i].Loaded then
     begin
-      FData[i].FChar := chr(StrToInt(charid));
       FData[i].HasShadow := BMP.FindColor(FData[i].Shadow, 255);
 
       shd_box := TPABounds(FData[i].Shadow);
